@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import os  #
+import os  
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0",
