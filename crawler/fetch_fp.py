@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import os
+import os  # 
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/112.0.0.0 Safari/537.36",
@@ -8,7 +8,6 @@ HEADERS = {
 }
 
 FP_URL = "https://foreignpolicy.com/latest/"
-
 
 def fetch_latest_fp_articles():
     response = requests.get(FP_URL, headers=HEADERS)
