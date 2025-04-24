@@ -1,28 +1,22 @@
 import os
-from openai import OpenAI
+import google.generativeai as genai
 import time
 
-# ✅ 从环境变量中获取 API Key
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# ✅ 从 GitHub Secrets 中读取 Gemini API Key
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+model = genai.GenerativeModel('gemini-pro')
 
 def summarize_article(title, content):
-    prompt = f"""请将下面这篇英文文章的内容翻译成中文并压缩为不超过500字的摘要，保持语义完整：
+    prompt = f"""请将下面这篇英文文章的内容翻译成中文并压缩为不超过200字的摘要，保持语义完整：
 
 标题：{title}
 正文：{content}"""
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "你是一个擅长总结英文文章的中文编辑。"},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.5,
-            max_tokens=400
-        )
-        return response.choices[0].message.content
+        response = model.generate_content(prompt)
+        return response.text
     except Exception as e:
-        print(f"❌ ChatGPT 出错：{e}")
+        print(f"❌ Gemini 出错：{e}")
         time.sleep(2)
         return None
