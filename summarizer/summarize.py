@@ -1,7 +1,9 @@
+import os
 from openai import OpenAI
 import time
 
-client = OpenAI()
+# ✅ 从环境变量中获取 API Key
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def summarize_article(title, content):
     prompt = f"""请将下面这篇英文文章的内容翻译成中文并压缩为不超过500字的摘要，保持语义完整：
