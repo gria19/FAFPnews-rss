@@ -3,4 +3,4 @@ requests
 openai
 feedgen
 feedparser  # ✅ 新增这一行
-
+google-generativeai
