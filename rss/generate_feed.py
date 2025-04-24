@@ -1,5 +1,5 @@
 from feedgen.feed import FeedGenerator
-from datetime import datetime
+from datetime import datetime, timezone
 
 def generate_rss(feed_items, output_file="rss.xml"):
     fg = FeedGenerator()
