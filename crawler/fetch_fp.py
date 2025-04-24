@@ -16,4 +16,4 @@ def fetch_latest_fp_articles():
     print("📄 Foreign Policy 页面返回 HTML：")
     print(response.text[:2000])  # 调试用，查看页面结构或是否为登录页
 
-    soup = BeautifulSoup(response.text, 'html.parser
+    soup = BeautifulSoup(response.text, 'html.parser'
