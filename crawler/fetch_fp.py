@@ -22,3 +22,5 @@ def fetch_latest_fp_articles():
         articles.append({"title": title, "url": url})
 
     return articles
+
+print(response.text[:2000])  # 打印前2000个字符
