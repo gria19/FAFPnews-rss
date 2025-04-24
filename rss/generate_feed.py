@@ -15,6 +15,6 @@ def generate_rss(feed_items, output_file="rss.xml"):
         fe.title(item["title"])
         fe.link(href=item["url"])
         fe.description(item["summary"])
-        fe.pubDate(datetime.utcnow())
+        fe.pubDate(datetime.now(timezone.utc))  # ✅ 有时区信息
 
     fg.rss_file(output_file, pretty=True)
