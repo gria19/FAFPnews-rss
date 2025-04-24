@@ -1,29 +1,26 @@
-import openai
-import os
+from openai import OpenAI
+import time
 
-# 从环境变量中读取 OpenAI 的 API 密钥
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI()
 
 def summarize_article(title, content):
-    prompt = f"""
-你是一位新闻翻译和摘要专家。请将以下英文新闻翻译成中文，并生成一段 500 字以内的中文摘要：
+    prompt = f"""请将下面这篇英文文章的内容翻译成中文并压缩为不超过500字的摘要，保持语义完整：
 
 标题：{title}
+正文：{content}"""
 
-正文：{content}
-
-输出格式：
-1. 中文标题：
-2. 中文翻译（简要段落）：
-3. 中文摘要（500字以内）：
-"""
-
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "你是一位严谨的财经新闻翻译员"},
-            {"role": "user", "content": prompt}
-        ]
-    )
-
-    return response.choices[0].message.content.strip()
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "你是一个擅长总结英文文章的中文编辑。"},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.5,
+            max_tokens=400
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        print(f"❌ ChatGPT 出错：{e}")
+        time.sleep(2)
+        return None
