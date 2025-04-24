@@ -11,9 +11,19 @@ FP_URL = "https://foreignpolicy.com/latest/"
 
 def fetch_latest_fp_articles():
     response = requests.get(FP_URL, headers=HEADERS)
-    
-    # ✅ 调试打印：网页返回的内容（前2000字）
-    print("📄 Foreign Policy 页面返回 HTML：")
-    print(response.text[:2000])  # 调试用，查看页面结构或是否为登录页
 
-   soup = BeautifulSoup(response.text, 'html.parser')
+    # ✅ 调试打印页面 HTML（最多 2000 字）
+    print("📄 Foreign Policy 页面返回 HTML：")
+    print(response.text[:2000])
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    articles = []
+    for item in soup.select("article a.card-title")[:5]:
+        title = item.text.strip()
+        url = item["href"]
+        if not url.startswith("http"):
+            url = "https://foreignpolicy.com" + url
+        articles.append({"title": title, "url": url})
+
+    return articles
